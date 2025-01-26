@@ -1,25 +1,38 @@
-const mongoose = require("./mongoose")
+const mongoose = require("mongoose")
+const bcrypt = require('bcrypt');
+
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    profile: {
-      firstName: String,
-      lastName: String,
-      phoneNumber: String,
-      avatar: String
+    name: {
+      type: String,
+      required: true, 
     },
-    role: { 
-      type: String, 
-      enum: ['user', 'admin', 'staff'], 
-      default: 'user' 
+    email: {
+      type: String,
+      required: true, // The user's email is mandatory
+      unique: true,   // Ensure emails are unique in the database
     },
-    emailVerified: { type: Boolean, default: false },
-    blocked: { type: Boolean, default: false },
-    resetPasswordToken: String,
-    resetPasswordExpires: Date,
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    password: {
+      type: String,
+      required: true, // The hashed password is mandatory
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'], 
+      required: true, // The user's role is mandatory
+    },
+   
+  }, {
+    "collection":"Users"// Adds createdAt and updatedAt timestamps automatically
   });
   
-  const userModel = mongoose.model('userModel', UserSchema)
+//   const UserModel = mongoose.model('UserModel', UserSchema);
+
+  UserSchema.pre('save', async function(next) {
+    if (this.isModified('password')) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+    next();
+  });
+
+  module.exports = mongoose.model('User', UserSchema);
