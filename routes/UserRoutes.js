@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const mongoose=require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserSchema');
 const { authenticate, authorizeRole } = require('../middleware/Auth'); 
@@ -68,56 +69,11 @@ router.put('/update', authenticate, async (req, res) => {
   }
 });
 
-//update password
-router.put('/password', authenticate, async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-
-  try {
-    // Ensure req.user.id is a valid ObjectId before passing it to findById
-    const userId = mongoose.Types.ObjectId(req.user.id); // Convert to ObjectId
-    const user = await User.findById(userId);  // Use ObjectId
-
-    // Check if user was found
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Old password is incorrect' });
-    }
-
-    user.password = await bcrypt.hash(newPassword, 10);
-    await user.save();
-    res.json({ message: 'Password updated successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-
 // Forgot password (request reset password email)
 router.get('/forgot-password', async (req, res) => {
   const { email } = req.query;
   // Logic to send reset password email (mocked)
   res.json({ message: `Reset password link sent to ${email}` });
-});
-
-// Reset user password
-router.post('/reset-password', async (req, res) => {
-  const { email, newPassword } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    user.password = await bcrypt.hash(newPassword, 10);
-    await user.save();
-    res.json({ message: 'Password reset successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
 });
 
 // Show list of all users (admin only)

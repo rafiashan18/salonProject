@@ -56,10 +56,6 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/available', async (req, res) => {
-    console.log('Request received for available employees');
-    console.log(req.params);  // This will log any parameters passed in the URL
-    console.log(req.query);  // This will log any query parameters
-  
     try {
       const availableEmployees = await Employee.find({ availability: true });
       res.status(200).json(availableEmployees);
