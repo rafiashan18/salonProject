@@ -126,21 +126,6 @@ router.post('/apply-discount', authenticate, async (req, res) => {
   }
 });
 
-// Check availability of services in the cart
-router.get('/check-availability', authenticate, async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ user: req.user._id }).populate('items.service');
-    if (!cart) return res.status(404).json({ error: 'Cart not found' });
 
-    const unavailableServices = cart.items.filter(item => !item.service.isAvailable); // Assuming `isAvailable` exists in the Service schema
-    if (unavailableServices.length > 0) {
-      return res.json({ available: false, unavailableServices });
-    }
-
-    res.json({ available: true });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
 
 module.exports = router;

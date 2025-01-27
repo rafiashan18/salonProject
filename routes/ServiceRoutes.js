@@ -59,7 +59,7 @@ router.get('/category/:category', async (req, res) => {
   }
 });
 
-// POST: Search for services by name or description
+//serach for service
 router.post('/search', async (req, res) => {
   const { query } = req.body;
   try {
@@ -73,7 +73,7 @@ router.post('/search', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
+}); 
 
 // GET: Show the most popular services (based on rating or reviews)
 router.get('/popular', async (req, res) => {
@@ -200,8 +200,7 @@ router.get('/reviews/:id', async (req, res) => {
       if (reviewIndex === -1) {
         return res.status(404).json({ error: 'Review not found' });
       }
-  
-      service.reviews.splice(reviewIndex, 1);  // Remove the comment
+
       await service.save();
   
       res.json({ message: 'Review deleted successfully', service });
