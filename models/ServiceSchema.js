@@ -20,20 +20,20 @@ const serviceSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    default: 0,  // Average rating, default to 0
+    default: 0,  
   },
   discount: {
     type: Number,
-    default: 0,  // Discount percentage (0 if no discount)
+    default: 0,  
   },
   availability: {
     type: Boolean,
-    default: true,  // Indicates if the service is available
+    default: true,  
   },
-  reviews: [String], // Store reviews as an array of comments
+  reviews: [String], 
 }, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
-  collection: 'services', // Specifies collection name
+  timestamps: true, 
+  collection: 'services',
 });
 
 module.exports = mongoose.model('Service', serviceSchema);

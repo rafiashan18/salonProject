@@ -39,9 +39,6 @@ router.post('/initialize', authenticate, async (req, res) => {
     }
   });
   
-
-  
-
 // Show payment history for the user
 router.get('/history', authenticate, async (req, res) => {
   try {
@@ -70,43 +67,6 @@ router.get('/status/:paymentId', authenticate, async (req, res) => {
       res.status(400).json({ error: err.message });
     }
   });
-
-// Save card details for future payments (by updating the schema entry)
-router.post('/save-card', authenticate, async (req, res) => {
-  const { cardNumber, expiryDate, cardHolderName } = req.body;
-  try {
-    const cardDetails = { cardNumber, expiryDate, cardHolderName };
-    const payment = new Payment({ user: req.user._id, amount: 0, paymentMethod: 'card', cardDetails });
-    await payment.save();
-    res.json({ message: 'Card details saved', cardDetails });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Show saved cards
-router.get('/saved-cards', authenticate, async (req, res) => {
-  try {
-    const cards = await Payment.find({ user: req.user._id, 'cardDetails.cardNumber': { $ne: null } });
-    res.json(cards.map(payment => payment.cardDetails));
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Remove a saved card
-router.delete('/saved-card/:cardId', authenticate, async (req, res) => {
-  try {
-    const payment = await Payment.findOneAndUpdate(
-      { user: req.user._id, 'cardDetails.cardNumber': req.params.cardId },
-      { $set: { cardDetails: null } }
-    );
-    if (!payment) return res.status(404).json({ error: 'Card not found' });
-    res.json({ message: 'Card removed successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
 
 // Process a payment refund
 router.post('/refund/:paymentId', authenticate, async (req, res) => {

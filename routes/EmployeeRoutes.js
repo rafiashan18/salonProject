@@ -5,8 +5,7 @@ const { authenticate, authorizeRole } = require('../middleware/Auth');
 
 
 router.post('/', authenticate, authorizeRole('admin'), async (req, res) => {
-    console.log('Request Body:', req.body);
-  
+    
     try {
       const { name, email, phone, role, availability, schedule, reviews, tasks } = req.body;
   
@@ -97,19 +96,6 @@ router.delete('/:id', authenticate, authorizeRole('admin'), async (req, res) => 
   }
 });
 
-// Similarly update other routes that used isAdmin
-router.post('/mark-available/:id', authenticate, authorizeRole('admin'), async (req, res) => {
-  try {
-    const employee = await Employee.findById(req.params.id);
-    if (!employee) return res.status(404).json({ message: 'Employee not found' });
-
-    employee.availability = true;
-    await employee.save();
-    res.status(200).json({ message: 'Employee marked as available' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
 
 router.post('/assign-task', async (req, res) => {
     const { employeeId, task } = req.body;
@@ -146,10 +132,8 @@ router.get('/tasks/:id', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-
   
-// Existing routes remain the same, but update admin-only routes:
+ //mark Employee available
 router.post('/mark-available/:id', authenticate, authorizeRole('admin'), async (req, res) => {
     try {
       const employee = await Employee.findById(req.params.id);
@@ -163,6 +147,7 @@ router.post('/mark-available/:id', authenticate, authorizeRole('admin'), async (
     }
   });
   
+  //mark Employee unavailable
   router.post('/mark-unavailable/:id', authenticate, authorizeRole('admin'), async (req, res) => {
     try {
       const employee = await Employee.findById(req.params.id);
@@ -237,7 +222,7 @@ router.get('/schedule/:id', async (req, res) => {
   }
 });
 
-// 15. Search employees by name or skill
+// 15. Search employees 
 router.post('/search', async (req, res) => {
   const { searchTerm } = req.body;
   try {

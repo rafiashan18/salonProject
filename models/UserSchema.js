@@ -8,21 +8,21 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
       type: String,
-      required: true, // The user's email is mandatory
-      unique: true,   // Ensure emails are unique in the database
+      required: true, 
+      unique: true,   
     },
     password: {
       type: String,
-      required: true, // The hashed password is mandatory
+      required: true, 
     },
     role: {
       type: String,
       enum: ['user', 'admin'], 
-      required: true, // The user's role is mandatory
+      required: true, 
     },
    
   }, {
-    "collection":"Users"// Adds createdAt and updatedAt timestamps automatically
+    "collection":"Users"
   });
   
 

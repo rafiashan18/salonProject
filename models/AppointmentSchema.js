@@ -2,12 +2,12 @@ const mongoose=require('mongoose')
 const appointmentSchema = new mongoose.Schema({
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Use the correct model name here
+      ref: 'User', 
       required: true
     },
     service: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Service', // Ensure this is correct as well
+      ref: 'Service', 
       required: true
     },
     employee: {

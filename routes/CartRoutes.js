@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authenticate, authorizeRole } = require('../middleware/Auth');
 const Cart=require('../models/CartSchema')
-// Routes
+
 // Add a service to the cart
 router.post('/add', authenticate, async (req, res) => {
   const { serviceId, quantity } = req.body;

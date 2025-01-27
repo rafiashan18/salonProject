@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cartItemSchema = new mongoose.Schema({
   service: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Service', // Assuming there's a Service model
+    ref: 'Service',
     required: true
   },
   quantity: {
@@ -16,11 +16,11 @@ const cartItemSchema = new mongoose.Schema({
 const cartSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference the User model
+    ref: 'User',
     required: true,
     unique: true
   },
-  items: [cartItemSchema], // Array of cart items
+  items: [cartItemSchema], 
   discountCode: {
     type: String,
     default: null

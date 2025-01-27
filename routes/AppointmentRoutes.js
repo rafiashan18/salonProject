@@ -26,7 +26,7 @@ router.post('/', authenticate, async (req, res) => {
   }
 });
 
-// GET /api/appointments - Show all appointments for the logged-in user
+// GET /api/appointments 
 router.get('/', authenticate, async (req, res) => {
   try {
     const appointments = await Appointment.find();
@@ -76,7 +76,6 @@ router.post('/reminders', authenticate, async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.body.appointmentId).populate('user service');
     if (!appointment) return res.status(404).json({ error: 'Appointment not found' });
-    // Reminder logic here (e.g., email/SMS)
     res.json({ message: 'Reminder sent successfully', appointment });
   } catch (err) {
     res.status(400).json({ error: err.message });

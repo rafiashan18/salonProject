@@ -23,14 +23,14 @@ const employeeSchema = new mongoose.Schema({
     default: true
   },
   schedule: {
-    type: [String], // Change this to store time ranges as strings
+    type: [String], 
     default: []
   },
   tasks: {
     type: [String],
     default: []
   },
-  reviews: [{ // Array to store reviews for the employee
+  reviews: [{
     rating: { type: Number, required: true },
     comment: { type: String }
   }]
