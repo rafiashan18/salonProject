@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema({
     "collection":"Users"// Adds createdAt and updatedAt timestamps automatically
   });
   
-//   const UserModel = mongoose.model('UserModel', UserSchema);
 
   UserSchema.pre('save', async function(next) {
     if (this.isModified('password')) {

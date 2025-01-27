@@ -1,20 +1,28 @@
 {
-  "name": "package",
+  "name": "salonproject",
   "version": "1.0.0",
-  "description": "This project is to develop an online salon system using Node.js for the backend, and MongoDB for data storage. The system will allow users to easily book salon services online by selecting their own desired location, service, date, time, and preferred employee. It will include user registration, secure login, service selection, and payment functionalities. The goal is to create an easy-to-use platform for customers while helping salon owners to manage appointments and employee schedules effectively. The intended audience includes female salon customers who value convenience and salon staff who want to automate the booking process. This system eases the issue of manual booking and scheduling, reducing the chances of errors and saving time for both customers and salon owners.",
+  "description": "AWP project: Salon Website",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "sundila , rafia, maryam",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafiashan18/salonProject.git"
+  },
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafiashan18/salonProject/issues"
+  },
+  "homepage": "https://github.com/rafiashan18/salonProject#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.12.0",
     "mongoose": "^8.9.5",
-    "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   }
